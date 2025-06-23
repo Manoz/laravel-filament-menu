@@ -1,0 +1,89 @@
+{
+    "name": "novius/laravel-filament-menu",
+    "description": "A Filament package to manage menus in your application.",
+    "keywords": [
+        "laravel",
+        "filament",
+        "menu"
+    ],
+    "license": "AGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Novius Agency",
+            "email": "team-developpeurs@novius.com",
+            "homepage": "https://www.novius.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "filament/filament": "^3.3",
+        "laravel/framework": "^11.0 | ^12.0",
+        "laravel/nova": "^5.0",
+        "novius/laravel-linkable": "^1.0",
+        "novius/laravel-nova-order-nestedset-field": "^5.0",
+        "spatie/laravel-sluggable": "^3.4.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^2.0 | ^3.0",
+        "laravel/pint": "^1.7",
+        "orchestra/testbench": "^10.3",
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "Novius\\LaravelFilamentMenu\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Novius\\LaravelFilamentMenu\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Novius\\LaravelFilamentMenu\\LaravelFilamentMenuServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "cs-fix": [
+            "./vendor/bin/pint -v"
+        ],
+        "lint": [
+            "@composer cs-fix -- --test"
+        ],
+        "test": [
+            "vendor/bin/phpunit --verbose --log-junit phpunit.log.xml"
+        ],
+        "phpstan": [
+            "vendor/bin/phpstan analyse --memory-limit 1G"
+        ],
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve --ansi"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
