@@ -5,6 +5,7 @@ namespace Novius\LaravelFilamentMenu\Concerns;
 use Kalnoy\Nestedset\Collection;
 use Novius\LaravelFilamentMenu\Models\Menu;
 use Novius\LaravelFilamentMenu\Models\MenuItem;
+use Throwable;
 
 trait IsMenuTemplate
 {
@@ -41,15 +42,21 @@ trait IsMenuTemplate
 
     abstract public function view(): string;
 
+    /**
+     * @throws Throwable
+     */
     public function render(Menu $menu, Collection $items): string
     {
-        return view($this->view(), ['menu' => $menu, 'items' => $items]);
+        return view($this->view(), ['menu' => $menu, 'items' => $items])->render();
     }
 
     abstract public function viewItem(): string;
 
+    /**
+     * @throws Throwable
+     */
     public function renderItem(Menu $menu, MenuItem $item): string
     {
-        return view($this->viewItem(), ['menu' => $menu, 'item' => $item]);
+        return view($this->viewItem(), ['menu' => $menu, 'item' => $item])->render();
     }
 }

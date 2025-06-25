@@ -15,7 +15,7 @@ class Menu extends Component
     {
         $this->menu = MenuModel::query()
             ->where('slug', $menuSlug)
-            ->withLocale($locale ?? app()->getLocale())
+            ->where('locale', $locale ?? app()->getLocale())
             ->first();
     }
 

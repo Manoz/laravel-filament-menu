@@ -11,5 +11,5 @@ parameters:
     editorUrlTitle: '%%file%%:%%line%%'
 
     ignoreErrors:
-        - identifier: propertyTag.unresolvableType
+        - identifier: phpDoc.parseError
         - identifier: generics.notGeneric

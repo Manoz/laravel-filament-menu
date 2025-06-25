@@ -17,6 +17,9 @@ class MenuItemsRelationManager extends RelationManager
 {
     protected static string $relationship = 'children';
 
+    /** @var MenuItem */
+    public Model $ownerRecord;
+
     public static function getTitle(Model $ownerRecord, string $pageClass): string
     {
         return trans('laravel-filament-menu::menu.sub_menus');

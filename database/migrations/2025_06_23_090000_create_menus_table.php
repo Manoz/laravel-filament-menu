@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Kalnoy\Nestedset\NestedSet;
 
 return new class extends Migration
 {
@@ -28,7 +29,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('title');
             $table->unsignedInteger('menu_id');
-            $table->nestedSet();
+            NestedSet::columns($table);
             $table->string('link_type');
             $table->string('external_link')->nullable();
             $table->string('internal_route')->nullable();

@@ -3,11 +3,12 @@
 namespace Novius\LaravelFilamentMenu\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
-use Kalnoy\Nestedset\Collection;
+use Kalnoy\Nestedset\Collection as NestedsetCollection;
 use Novius\LaravelFilamentMenu\Cast\AsTemplate;
 use Novius\LaravelFilamentMenu\Contracts\MenuTemplate;
 use Novius\LaravelFilamentMenu\Database\Factories\MenuFactory;
@@ -19,20 +20,23 @@ use Spatie\Sluggable\SlugOptions;
 /**
  * @property int $id
  * @property string $name
- * @property ?string $title
+ * @property string|null $title
  * @property string $slug
  * @property string $locale
- * @property ?int $locale_parent_id
  * @property MenuTemplate $template
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * @property-read Menu|null $parent
- * @property-read Collection<int, MenuItem> $items
+ * @property int|null $locale_parent_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read NestedsetCollection<int, MenuItem> $items
+ * @property-read Collection<int, Menu> $translations
+ * @property-read Collection<int, Menu> $translationsWithDeleted
  *
  * @method static MenuFactory factory($count = null, $state = [])
- * @method static Builder<Menu> newModelQuery()
- * @method static Builder<Menu> newQuery()
- * @method static Builder<Menu> query()
+ * @method static Builder<static>|Menu find($id, $columns = ['*'])
+ * @method static Builder<static>|Menu newModelQuery()
+ * @method static Builder<static>|Menu newQuery()
+ * @method static Builder<static>|Menu query()
+ * @method static Builder<static>|Menu withLocale(?string $locale)
  *
  * @mixin Model
  */

@@ -2,14 +2,12 @@
 
 namespace Novius\LaravelFilamentMenu\Models;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
-use Kalnoy\Nestedset\Collection as NestedCollection;
+use Kalnoy\Nestedset\Collection;
 use Kalnoy\Nestedset\NodeTrait;
 use Kalnoy\Nestedset\QueryBuilder;
 use Novius\LaravelFilamentMenu\Enums\LinkType;
@@ -22,32 +20,28 @@ use Novius\LaravelLinkable\Traits\Linkable;
  * @property int $id
  * @property string $title
  * @property int $menu_id
- * @property ?int $parent_id
- * @property int $left
- * @property int $right
+ * @property int $_lft
+ * @property int $_rgt
+ * @property int|null $parent_id
  * @property LinkType $link_type
- * @property ?string $external_link
- * @property ?string $internal_route
- * @property ?string $linkable_type
- * @property ?int $linkable_id
- * @property ?string $html
+ * @property string|null $external_link
+ * @property string|null $internal_route
+ * @property string|null $linkable_type
+ * @property int|null $linkable_id
+ * @property string|null $html
  * @property bool $target_blank
- * @property ?string $html_classes
- * @property array $extras
- * @property ?Carbon $created_at
- * @property ?Carbon $updated_at
- * @property-read Collection<MenuItem> $ancestors
- * @property-read Collection<MenuItem> $children
- * @property-read Collection<MenuItem> $descendants
- * @property-read Model&Linkable $linkable
+ * @property string|null $html_classes
+ * @property $extras
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection<int, MenuItem> $ancestors
+ * @property-read Collection<int, MenuItem> $children
+ * @property-read Collection<int, MenuItem> $descendants
+ * @property-read Model&Linkable|null $linkable
  * @property-read Menu $menu
  * @property-read MenuItem|null $parent
  *
- * @method static Builder<MenuItem> newModelQuery()
- * @method static Builder<MenuItem> newQuery()
- * @method static Builder<MenuItem> query()
- * @method static Builder<MenuItem> ordered(string $direction = 'asc')
- * @method static NestedCollection<int, static> all($columns = ['*'])
+ * @method static Collection<int, static> all($columns = ['*'])
  * @method static QueryBuilder<static>|MenuItem ancestorsAndSelf($id, array $columns = [])
  * @method static QueryBuilder<static>|MenuItem ancestorsOf($id, array $columns = [])
  * @method static QueryBuilder<static>|MenuItem applyNestedSetScope(?string $table = null)
@@ -58,7 +52,7 @@ use Novius\LaravelLinkable\Traits\Linkable;
  * @method static QueryBuilder<static>|MenuItem descendantsOf($id, array $columns = [], $andSelf = false)
  * @method static QueryBuilder<static>|MenuItem fixSubtree($root)
  * @method static QueryBuilder<static>|MenuItem fixTree($root = null)
- * @method static NestedCollection<int, static> get($columns = ['*'])
+ * @method static Collection<int, static> get($columns = ['*'])
  * @method static QueryBuilder<static>|MenuItem getNodeData($id, $required = false)
  * @method static QueryBuilder<static>|MenuItem getPlainNodeData($id, $required = false)
  * @method static QueryBuilder<static>|MenuItem getTotalErrors()
@@ -68,10 +62,13 @@ use Novius\LaravelLinkable\Traits\Linkable;
  * @method static QueryBuilder<static>|MenuItem leaves(array $columns = [])
  * @method static QueryBuilder<static>|MenuItem makeGap(int $cut, int $height)
  * @method static QueryBuilder<static>|MenuItem moveNode($key, $position)
+ * @method static QueryBuilder<static>|MenuItem newModelQuery()
+ * @method static QueryBuilder<static>|MenuItem newQuery()
  * @method static QueryBuilder<static>|MenuItem orWhereAncestorOf(bool $id, bool $andSelf = false)
  * @method static QueryBuilder<static>|MenuItem orWhereDescendantOf($id)
  * @method static QueryBuilder<static>|MenuItem orWhereNodeBetween($values)
  * @method static QueryBuilder<static>|MenuItem orWhereNotDescendantOf($id)
+ * @method static QueryBuilder<static>|MenuItem query()
  * @method static QueryBuilder<static>|MenuItem rebuildSubtree($root, array $data, $delete = false)
  * @method static QueryBuilder<static>|MenuItem rebuildTree(array $data, $delete = false, $root = null)
  * @method static QueryBuilder<static>|MenuItem reversed()
@@ -158,6 +155,7 @@ class MenuItem extends Model
         }
 
         if ($this->link_type === LinkType::internal_link) {
+            /** @phpstan-ignore property.notFound */
             if ($this->linkable !== null) {
                 $href = $this->linkable->url() ?? $href;
             } elseif (! empty($this->internal_link)) {

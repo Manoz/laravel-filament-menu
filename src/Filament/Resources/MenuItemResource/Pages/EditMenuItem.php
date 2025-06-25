@@ -7,6 +7,7 @@ use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
 use Novius\LaravelFilamentMenu\Filament\Resources\MenuResource;
+use Novius\LaravelFilamentMenu\Models\MenuItem;
 
 class EditMenuItem extends EditRecord
 {
@@ -25,13 +26,17 @@ class EditMenuItem extends EditRecord
 
     protected function configureDeleteAction(DeleteAction $action): void
     {
+        /** @var MenuItem $record */
+        $record = $this->getRecord();
+
         $action
-            ->authorize(MenuManager::getMenuItemResource()::canDelete($this->getRecord()))
-            ->successRedirectUrl(MenuResource::getUrl('edit', ['record' => $this->getRecord()->menu]));
+            ->authorize(MenuManager::getMenuItemResource()::canDelete($record))
+            ->successRedirectUrl(MenuResource::getUrl('edit', ['record' => $record->menu]));
     }
 
     public function getBreadcrumbs(): array
     {
+        /** @var MenuItem $record */
         $record = $this->getRecord();
 
         $breadcrumbs = [
