@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Fluent;
 use Kalnoy\Nestedset\Collection;
 use Kalnoy\Nestedset\NodeTrait;
 use Kalnoy\Nestedset\QueryBuilder;
@@ -31,7 +32,7 @@ use Novius\LaravelLinkable\Traits\Linkable;
  * @property string|null $html
  * @property bool $target_blank
  * @property string|null $html_classes
- * @property $extras
+ * @property Fluent $extras
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Collection<int, MenuItem> $ancestors

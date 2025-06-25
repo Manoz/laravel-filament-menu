@@ -164,6 +164,7 @@ class MenuItemResource extends Resource
                     ->inline(false),
 
                 Grid::make()
+                    ->statePath('extras')
                     ->schema(function (Get $get) use ($getMenu) {
                         $menu = $getMenu($get('menu_id'));
 

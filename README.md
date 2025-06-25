@@ -102,6 +102,20 @@ class MyMenuTemplate implements MenuTemplate // Must implement MenuTemplate inte
         return true; // Define if the menu need a title displaying in front. False by default if you don't implement this method
     }
 
+    public function fields(): array
+    {
+        return [
+            \Filament\Forms\Components\DatePicker::make('date'), // You can add additionals fields on items
+        ];
+    }
+
+    public function casts(): array
+    {
+        return [
+            'date' => 'date:Y-m-d', // If you add additionals fields on items, you can define their casts
+        ];
+    }
+
     public function view(): string
     {
         return 'menus.my-template'; // Define the view used to display this the menu
@@ -159,6 +173,9 @@ The the view to display an item of the menu
             {{ $item->target_blank ? 'target="_blank"' : '' }}
         >
             {{ $item->title }}
+            
+            {{-- If you add additionals fields on items, you can access it like this --}}
+            {{ $item->extras->date?->format('Y-m-d') ?? '' }} 
         </a>
     @endif
 
