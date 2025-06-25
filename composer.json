@@ -81,8 +81,8 @@
     },
     "repositories": [
         {
-            "type": "path",
-            "url": "/data/www-local/web/libs/laravel-linkable"
+            "type": "vcs",
+            "url": "git@github.com:novius/laravel-linkable.git"
         },
         {
             "type": "vcs",
