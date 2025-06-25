@@ -1,0 +1,55 @@
+<?php
+
+namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItemResource\Pages;
+
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
+use Filament\Resources\Pages\EditRecord;
+use Novius\LaravelFilamentMenu\Facades\MenuManager;
+use Novius\LaravelFilamentMenu\Filament\Resources\MenuResource;
+
+class EditMenuItem extends EditRecord
+{
+    public static function getResource(): string
+    {
+        return MenuManager::getMenuItemResource();
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            ViewAction::make(),
+            DeleteAction::make(),
+        ];
+    }
+
+    protected function configureDeleteAction(DeleteAction $action): void
+    {
+        $action
+            ->authorize(MenuManager::getMenuItemResource()::canDelete($this->getRecord()))
+            ->successRedirectUrl(MenuResource::getUrl('edit', ['record' => $this->getRecord()->menu]));
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        $record = $this->getRecord();
+
+        $breadcrumbs = [
+            MenuManager::getMenuResource()::getUrl() => MenuManager::getMenuResource()::getBreadcrumb(),
+            MenuManager::getMenuResource()::getUrl('view', ['record' => $record->menu]) => $record->menu->name,
+            MenuManager::getMenuResource()::getUrl('edit', ['record' => $record->menu]) => MenuManager::getMenuItemResource()::getBreadcrumb(),
+        ];
+
+        if ($record->exists) {
+            $breadcrumbs[MenuManager::getMenuItemResource()::getUrl('edit', ['record' => $record])] = $this->getRecordTitle();
+        }
+
+        $breadcrumbs[] = $this->getBreadcrumb();
+
+        if (filled($cluster = static::getCluster())) {
+            return $cluster::unshiftClusterBreadcrumbs($breadcrumbs);
+        }
+
+        return $breadcrumbs;
+    }
+}

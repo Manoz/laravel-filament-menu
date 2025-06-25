@@ -16,12 +16,15 @@
     ],
     "require": {
         "php": "^8.2",
+        "codewithdennis/filament-select-tree": "^3.1",
         "filament/filament": "^3.3",
+        "kalnoy/nestedset": "^6.0.6",
         "laravel/framework": "^11.0 | ^12.0",
-        "laravel/nova": "^5.0",
-        "novius/laravel-linkable": "^1.0",
-        "novius/laravel-nova-order-nestedset-field": "^5.0",
-        "spatie/laravel-sluggable": "^3.4.0"
+        "novius/laravel-filament-translatable": "dev-main",
+        "novius/laravel-json-casted": "^1.1",
+        "novius/laravel-linkable": "dev-main",
+        "spatie/laravel-sluggable": "^3.4.0",
+        "wiebenieuwenhuis/filament-code-editor": "^1.2"
     },
     "require-dev": {
         "larastan/larastan": "^2.0 | ^3.0",
@@ -31,7 +34,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Novius\\LaravelFilamentMenu\\": "src/"
+            "Novius\\LaravelFilamentMenu\\": "src/",
+            "Novius\\LaravelFilamentMenu\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
@@ -46,7 +50,10 @@
         "laravel": {
             "providers": [
                 "Novius\\LaravelFilamentMenu\\LaravelFilamentMenuServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "MenuManager": "Novius\\LaravelFilamentMenu\\Facades\\MenuManager"
+            }
         }
     },
     "scripts": {
@@ -55,9 +62,6 @@
         ],
         "lint": [
             "@composer cs-fix -- --test"
-        ],
-        "test": [
-            "vendor/bin/phpunit --verbose --log-junit phpunit.log.xml"
         ],
         "phpstan": [
             "vendor/bin/phpstan analyse --memory-limit 1G"
@@ -77,13 +81,17 @@
     },
     "repositories": [
         {
-            "type": "composer",
-            "url": "https://nova.laravel.com"
+            "type": "path",
+            "url": "/data/www-local/web/libs/laravel-linkable"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:novius/laravel-filament-translatable.git"
         }
     ],
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

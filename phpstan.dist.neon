@@ -1,0 +1,15 @@
+parameters:
+
+    paths:
+        - src/
+        - database/migrations
+
+    # Level 10 is the highest level
+    level: 5
+
+    editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+    editorUrlTitle: '%%file%%:%%line%%'
+
+    ignoreErrors:
+        - identifier: propertyTag.unresolvableType
+        - identifier: generics.notGeneric
