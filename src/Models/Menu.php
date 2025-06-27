@@ -25,6 +25,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $locale
  * @property MenuTemplate $template
  * @property int|null $locale_parent_id
+ * @property string|null $aria_label
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read NestedsetCollection<int, MenuItem> $items

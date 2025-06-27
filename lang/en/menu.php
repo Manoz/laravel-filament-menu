@@ -8,6 +8,7 @@ return [
     'menu_name' => 'Name',
     'slug' => 'Slug',
     'title' => 'Title',
+    'aria_label' => 'Aria label',
     'template' => 'Template',
     'parent_item' => 'Parent element',
     'internal_link' => 'Internal link',

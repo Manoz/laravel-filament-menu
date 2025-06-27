@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('locale', 15);
             $table->string('template');
             $table->unsignedInteger('locale_parent_id')->nullable()->index();
+            $table->string('aria_label')->nullable();
             $table->timestamps();
 
             $table->unique(['slug', 'locale']);

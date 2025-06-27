@@ -42,6 +42,16 @@ trait IsMenuTemplate
 
     abstract public function view(): string;
 
+    public function htmlClassesMenu(Menu $menu): array
+    {
+        return [];
+    }
+
+    public function htmlClassesMenuItem(Menu $menu, MenuItem $item): array
+    {
+        return [];
+    }
+
     /**
      * @throws Throwable
      */

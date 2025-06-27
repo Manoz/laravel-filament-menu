@@ -8,14 +8,30 @@
 <li>
     @if ($item->link_type === LinkType::html)
         {!! $item->html !!}
-    @else
-        <a href="{{ $item->href() }}" @class([$item->htmlClasses]) {{ $item->target_blank ? 'target="_blank"' : '' }}>
+    @elseif ($item->link_type !== LinkType::empty)
+        <a href="{{ $item->href() }}"
+            {{ $menu->template->isActiveItem($item) ? 'data-active="true"' : ''}}
+            @class([
+                ...$menu->template->htmlClassesMenuItem($menu, $item),
+                $item->htmlClasses
+            ])
+            {{ $item->target_blank ? 'target="_blank"' : '' }}
+        >
             {{ $item->title }}
         </a>
+    @else
+        <div @class([
+            ...$menu->template->htmlClassesMenuItem($menu, $item),
+            $item->htmlClasses
+        ])>
+            {{ $item->title }}
+        </div>
     @endif
 
     @if ($item->children->isNotEmpty())
-        <ul>
+        <ul
+            {{ $menu->template->containtActiveItem($item) ? 'data-open="true"' : ''}}
+        >
             @foreach($item->children as $item)
                 {!! $menu->template->renderItem($menu, $item) !!}
             @endforeach

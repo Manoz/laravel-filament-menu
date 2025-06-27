@@ -8,6 +8,7 @@ return [
     'menu_name' => 'Nom',
     'slug' => 'Slug',
     'title' => 'Titre',
+    'aria_label' => 'Aria label',
     'template' => 'Gabarit',
     'parent_item' => 'Élément parent',
     'internal_link' => 'Lien interne',

@@ -110,6 +110,9 @@ class MenuResource extends Resource
                         return true;
                     }),
 
+                TextInput::make('aria_label')
+                    ->label(trans('laravel-filament-menu::menu.aria_label')),
+
                 Hidden::make('locale_parent_id'),
             ]);
     }
