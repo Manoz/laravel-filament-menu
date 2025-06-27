@@ -28,6 +28,7 @@ use Novius\LaravelFilamentMenu\Filament\Resources\MenuResource\Pages\EditMenu;
 use Novius\LaravelFilamentMenu\Filament\Resources\MenuResource\Pages\ListMenu;
 use Novius\LaravelFilamentMenu\Filament\Resources\MenuResource\Pages\ViewMenu;
 use Novius\LaravelFilamentMenu\Filament\Resources\MenuResource\RelationManagers\MenuItemsRelationManager;
+use Novius\LaravelFilamentSlug\Filament\Forms\Components\Slug;
 use Novius\LaravelFilamentTranslatable\Filament\Forms\Components\Locale;
 use Novius\LaravelFilamentTranslatable\Filament\Tables\Columns\LocaleColumn;
 use Novius\LaravelFilamentTranslatable\Filament\Tables\Columns\TranslationsColumn;
@@ -70,7 +71,7 @@ class MenuResource extends Resource
                         $set('slug', Str::slug($state));
                     }),
 
-                TextInput::make('slug')
+                Slug::make('slug')
                     ->label(trans('laravel-filament-menu::menu.slug'))
                     ->required()
                     ->string()
