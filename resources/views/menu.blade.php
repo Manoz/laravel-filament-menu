@@ -6,7 +6,7 @@
 
 <nav role="navigation"
      aria-label="{{ $menu->aria_label ?? $menu->title ?? $menu->name }}"
-     @class([$menu->template->htmlClassesMenu($menu)])
+     @class($menu->template->htmlClassesMenu($menu))
 >
     @if ($menu->template->hasTitle())
         <div>

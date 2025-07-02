@@ -20,10 +20,11 @@
         "filament/filament": "^3.3",
         "kalnoy/nestedset": "^6.0.6",
         "laravel/framework": "^11.0 | ^12.0",
+        "novius/filament-relation-nested": "dev-main",
+        "novius/laravel-filament-slug": "dev-main",
         "novius/laravel-filament-translatable": "dev-main",
         "novius/laravel-json-casted": "^1.2",
         "novius/laravel-linkable": "dev-main",
-        "novius/laravel-filament-slug": "dev-main",
         "spatie/laravel-sluggable": "^3.4.0",
         "wiebenieuwenhuis/filament-code-editor": "^1.2"
     },
@@ -92,6 +93,10 @@
         {
             "type": "vcs",
             "url": "git@github.com:novius/laravel-filament-slug.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:novius/filament-relation-nested.git"
         }
     ],
     "config": {

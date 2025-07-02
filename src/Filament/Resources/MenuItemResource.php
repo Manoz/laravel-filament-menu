@@ -17,6 +17,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Novius\FilamentRelationNested\Filament\Tables\Columns\TreeColumn;
 use Novius\LaravelFilamentMenu\Enums\LinkType;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
 use Novius\LaravelFilamentMenu\Filament\Resources\MenuItemResource\Pages\CreateMenuItem;
@@ -189,32 +190,7 @@ class MenuItemResource extends Resource
             ->paginated(fn (Table $table) => ! empty($table->getSortColumn()) && $table->getSortColumn() !== '_lft')
             ->defaultSort('_lft')
             ->columns([
-                TextColumn::make('_lft')
-                    ->label(trans('laravel-filament-menu::menu.column_tree'))
-                    ->width(1)
-                    ->html()
-                    ->sortable()
-                    ->state(function (MenuItem $record, Table $table) {
-                        if (! empty($table->getSortColumn()) && $table->getSortColumn() !== '_lft') {
-                            return '';
-                        }
-
-                        $level = $record->ancestors->count();
-                        if ($level === 0) {
-                            return '<code>□</code>';
-                        }
-
-                        $isLast = $record->isLeaf();
-                        $hasNextSibling = $record->nextSiblings()->count() !== 0;
-
-                        $prefix = '<code>'.str_repeat('┃&nbsp;&nbsp;', $level - 1); // Espaces pour l'indentation
-
-                        if ($isLast && ! $hasNextSibling) {
-                            return $prefix.'┗━━□'.'</code>';
-                        }
-
-                        return $prefix.'┣━━□'.'</code>';
-                    }),
+                TreeColumn::make('_lft'),
 
                 TextColumn::make('title')
                     ->label(trans('laravel-filament-menu::menu.title'))
