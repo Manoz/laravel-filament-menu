@@ -5,6 +5,7 @@ return [
     'menu_singular_label' => 'Menu',
     'menu_items' => 'Entrées menu',
     'menu_item' => 'Entrée menu',
+    'id' => 'Id',
     'slug' => 'Slug',
     'title' => 'Titre',
     'aria_label' => 'Aria label',
@@ -22,6 +23,8 @@ return [
     'html' => 'HTML',
     'help_code' => 'Si vous remplissez cette partie, vous ne pouvez pas choisir de lien.',
     'link_type' => 'Type de lien',
+    'created_at' => 'Créé le',
+    'updated_at' => 'Modifié le',
 
     'template_with_title' => 'Menu avec titre',
     'template_without_title' => 'Menu sans titre',

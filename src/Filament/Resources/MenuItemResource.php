@@ -190,6 +190,12 @@ class MenuItemResource extends Resource
             ->paginated(fn (Table $table) => ! empty($table->getSortColumn()) && $table->getSortColumn() !== '_lft')
             ->defaultSort('_lft')
             ->columns([
+                TextColumn::make('id')
+                    ->label(trans('laravel-filament-menu::menu.id'))
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TreeColumn::make('_lft'),
 
                 TextColumn::make('title')
@@ -205,6 +211,18 @@ class MenuItemResource extends Resource
                     ->label(trans('laravel-filament-menu::menu.url'))
                     ->state(fn (MenuItem $record) => $record->href())
                     ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('created_at')
+                    ->label(trans('laravel-filament-menu::menu.created_at'))
+                    ->dateTime()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable(),
+
+                TextColumn::make('updated_at')
+                    ->label(trans('laravel-filament-menu::menu.updated_at'))
+                    ->dateTime()
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
             ]);
     }

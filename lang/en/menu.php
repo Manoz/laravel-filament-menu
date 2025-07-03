@@ -5,6 +5,7 @@ return [
     'menu_singular_label' => 'Menu',
     'menu_items' => 'Menu items',
     'menu_item' => 'Menu item',
+    'id' => 'Id',
     'slug' => 'Slug',
     'title' => 'Title',
     'aria_label' => 'Aria label',
@@ -22,6 +23,8 @@ return [
     'html' => 'HTML',
     'help_code' => 'If you fill this area you can\'t choose a link.',
     'link_type' => 'Link type',
+    'created_at' => 'Created at',
+    'updated_at' => 'Updated at',
 
     'template_with_title' => 'Menu with title',
     'template_without_title' => 'Menu without title',
