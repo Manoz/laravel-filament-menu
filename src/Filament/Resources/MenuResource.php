@@ -8,7 +8,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\BulkActionGroup;
@@ -19,7 +18,6 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
 use Novius\LaravelFilamentMenu\Contracts\MenuTemplate;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
@@ -64,16 +62,13 @@ class MenuResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
+                $title = TextInput::make('name')
                     ->label(trans('laravel-filament-menu::menu.name'))
-                    ->required()
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(function ($state, Set $set) {
-                        $set('slug', Str::slug($state));
-                    }),
+                    ->required(),
 
                 Slug::make('slug')
                     ->label(trans('laravel-filament-menu::menu.slug'))
+                    ->fromField($title)
                     ->required()
                     ->string()
                     ->regex('/^[a-zA-Z0-9-_]+$/')
