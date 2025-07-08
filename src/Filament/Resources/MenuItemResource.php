@@ -167,10 +167,14 @@ class MenuItemResource extends Resource
 
                 Grid::make()
                     ->statePath('extras')
-                    ->schema(function (Get $get) use ($getMenu) {
+                    ->schema(function (Get $get, Set $set) use ($getMenu) {
                         $menu = $getMenu($get('menu_id'));
 
                         if ($menu) {
+                            foreach ($menu->template->casts() as $key => $cast) {
+                                $set('extras.'.$key, $get('extras.'.$key));
+                            }
+
                             return $menu->template->fields();
                         }
 
