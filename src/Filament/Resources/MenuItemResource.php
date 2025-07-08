@@ -68,7 +68,6 @@ class MenuItemResource extends Resource
                 SelectTree::make('parent_id')
                     ->label(trans('laravel-filament-menu::menu.parent_item'))
                     ->enableBranchNode()
-                    ->clearable(false)
                     ->searchable()
                     ->live()
                     ->relationship(
