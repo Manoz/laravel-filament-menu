@@ -70,6 +70,7 @@ class MenuItemResource extends Resource
                     ->enableBranchNode()
                     ->clearable(false)
                     ->searchable()
+                    ->live()
                     ->relationship(
                         relationship: 'parent',
                         titleAttribute: 'title',
@@ -94,6 +95,7 @@ class MenuItemResource extends Resource
                 Select::make('menu_id')
                     ->label(trans('laravel-filament-menu::menu.menu_singular_label'))
                     ->relationship('menu', 'name')
+                    ->live()
                     ->disabled(fn (Get $get) => $get('menu_id')),
 
                 TextInput::make('title')
