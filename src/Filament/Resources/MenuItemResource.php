@@ -42,6 +42,8 @@ class MenuItemResource extends Resource
 
     protected static bool $shouldRegisterNavigation = false;
 
+    protected static ?Menu $menu = null;
+
     public static function getModel(): string
     {
         return MenuManager::getMenuItemModel();
@@ -70,21 +72,35 @@ class MenuItemResource extends Resource
                     ->enableBranchNode()
                     ->searchable()
                     ->live()
+                    ->hidden(function (Get $get) {
+                        $menu = static::getMenu($get('menu_id'));
+                        if ($menu) {
+                            return $menu->template->maxDepth() < 2;
+                        }
+
+                        return false;
+                    })
+                    ->disabledOptions(fn (?MenuItem $record) => $record ? [$record->id] : [])
                     ->relationship(
                         relationship: 'parent',
                         titleAttribute: 'title',
                         parentAttribute: 'parent_id',
-                        modifyQueryUsing: function (Builder|MenuItem $query, Get $get) {
+                        modifyQueryUsing: function (Builder|MenuItem $query, Get $get, ?MenuItem $record) {
                             $menu_id = $get('menu_id');
                             if ($menu_id) {
-                                $query->where('menu_id', $menu_id);
+                                $query = MenuItem::scoped(['menu_id' => $menu_id])
+                                    ->whereIsRoot();
                             }
 
                             return $query;
                         },
-                        modifyChildQueryUsing: function (Builder|MenuItem $query, ?MenuItem $record) {
-                            if ($record) {
-                                $query->whereNot('id', $record->id);
+                        modifyChildQueryUsing: function (Builder|MenuItem $query, Get $get, ?MenuItem $record) {
+                            $menu = static::getMenu($get('menu_id'));
+                            if ($menu) {
+                                $query = MenuItem::scoped(['menu_id' => $menu->id])
+                                    ->withoutRoot()
+                                    ->withDepth()
+                                    ->having('depth', '<', $menu->template->maxDepth() - 1);
                             }
 
                             return $query;
@@ -166,19 +182,10 @@ class MenuItemResource extends Resource
                     ->inline(false),
 
                 Grid::make()
-                    ->statePath('extras')
-                    ->schema(function (Get $get, Set $set) use ($getMenu) {
+                    ->schema(function (Get $get) use ($getMenu) {
                         $menu = $getMenu($get('menu_id'));
 
-                        if ($menu) {
-                            foreach ($menu->template->casts() as $key => $cast) {
-                                $set('extras.'.$key, $get('extras.'.$key));
-                            }
-
-                            return $menu->template->fields();
-                        }
-
-                        return [];
+                        return $menu?->template->fields() ?? [];
                     }),
             ]);
     }
@@ -245,5 +252,15 @@ class MenuItemResource extends Resource
         return [
             MenuItemsRelationManager::class,
         ];
+    }
+
+    protected static function getMenu($menu_id): ?Menu
+    {
+        if (static::$menu?->id === $menu_id) {
+            return static::$menu;
+        }
+        static::$menu = Menu::find($menu_id);
+
+        return static::$menu;
     }
 }

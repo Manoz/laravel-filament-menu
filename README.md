@@ -102,10 +102,15 @@ class MyMenuTemplate implements MenuTemplate // Must implement MenuTemplate inte
         return true; // Define if the menu need a title displaying in front. False by default if you don't implement this method
     }
 
+    public function maxDepth(): int
+    {
+        return 1; //Define the max depth of the menu
+    }
+
     public function fields(): array
     {
         return [
-            \Filament\Forms\Components\DatePicker::make('date'), // You can add additionals fields on items
+            \Filament\Forms\Components\DatePicker::make('extras.date'), // You can add additionals fields on items. Prefix field name by `extras.` to save them in the extras field
         ];
     }
 

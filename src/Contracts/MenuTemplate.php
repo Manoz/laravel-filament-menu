@@ -15,10 +15,24 @@ interface MenuTemplate
 
     public function hasTitle(): bool;
 
+    public function maxDepth(): int;
+
+    public function isActiveItem(MenuItem $item): bool;
+
+    public function containtActiveItem(MenuItem $item): bool;
+
     /** @return array<Component> */
     public function fields(): array;
 
     public function casts(): array;
+
+    public function view(): string;
+
+    public function htmlClassesMenu(Menu $menu): array;
+
+    public function htmlClassesMenuItem(Menu $menu, MenuItem $item): array;
+
+    public function viewItem(): string;
 
     public function render(Menu $menu, Collection $items): string;
 

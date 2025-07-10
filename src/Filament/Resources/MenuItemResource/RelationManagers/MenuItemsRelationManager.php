@@ -25,6 +25,17 @@ class MenuItemsRelationManager extends RelationManager
         return trans('laravel-filament-menu::menu.sub_menus');
     }
 
+    public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
+    {
+        /** @var MenuItem $ownerRecord */
+        $canView = parent::canViewForRecord($ownerRecord, $pageClass);
+        if (! $canView) {
+            return false;
+        }
+
+        return $ownerRecord->ancestors->count() < ($ownerRecord->menu->template->maxDepth() - 1);
+    }
+
     public function table(Table $table): Table
     {
         return MenuManager::getMenuItemResource()::table($table)

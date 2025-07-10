@@ -14,6 +14,11 @@ trait IsMenuTemplate
         return false;
     }
 
+    public function maxDepth(): int
+    {
+        return 1;
+    }
+
     public function isActiveItem(MenuItem $item): bool
     {
         return $item->href() === url()->current();
