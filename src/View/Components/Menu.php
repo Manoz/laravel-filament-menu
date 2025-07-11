@@ -20,8 +20,8 @@ class Menu extends Component
         protected Closure|array|string|null $containerItemsClasses = null,
         protected Closure|array|string|null $containerItemClasses = null,
         protected Closure|array|string|null $itemClasses = null,
-        protected string|null $itemActiveClasses = null,
-        protected string|null $itemContainsActiveClasses = null,
+        protected ?string $itemActiveClasses = null,
+        protected ?string $itemContainsActiveClasses = null,
     ) {
         $this->menu = MenuModel::query()
             ->where('slug', $menuSlug)
