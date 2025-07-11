@@ -2,6 +2,7 @@
 
 namespace Novius\LaravelFilamentMenu\Concerns;
 
+use Closure;
 use Kalnoy\Nestedset\Collection;
 use Novius\LaravelFilamentMenu\Models\Menu;
 use Novius\LaravelFilamentMenu\Models\MenuItem;
@@ -47,22 +48,36 @@ trait IsMenuTemplate
 
     abstract public function view(): string;
 
-    public function htmlClassesMenu(Menu $menu): array
-    {
-        return [];
-    }
-
-    public function htmlClassesMenuItem(Menu $menu, MenuItem $item): array
-    {
-        return [];
-    }
-
     /**
      * @throws Throwable
      */
-    public function render(Menu $menu, Collection $items): string
-    {
-        return view($this->view(), ['menu' => $menu, 'items' => $items])->render();
+    public function render(
+        Menu $menu,
+        Collection $items,
+        Closure|array|string|null $containerClasses = null,
+        Closure|array|string|null $titleClasses = null,
+        Closure|array|string|null $containerItemsClasses = null,
+        Closure|array|string|null $containerItemClasses = null,
+        Closure|array|string|null $itemClasses = null,
+        ?string $itemActiveClasses = null,
+        ?string $itemContainsActiveClasses = null,
+
+    ): string {
+        $containerClasses = (array) (is_callable($containerClasses) ? $containerClasses($menu) : $containerClasses);
+        $titleClasses = (array) (is_callable($titleClasses) ? $titleClasses($menu) : $titleClasses);
+        $containerItemsClassesCallback = static fn (?MenuItem $item = null) => (array) (is_callable($containerItemsClasses) ? $containerItemsClasses($item) : $containerItemsClasses);
+
+        return view($this->view(), [
+            'menu' => $menu,
+            'items' => $items,
+            'containerClasses' => $containerClasses,
+            'titleClasses' => $titleClasses,
+            'containerItemsClasses' => $containerItemsClassesCallback,
+            'containerItemClasses' => $containerItemClasses,
+            'itemClasses' => $itemClasses,
+            'itemActiveClasses' => $itemActiveClasses,
+            'itemContainsActiveClasses' => $itemContainsActiveClasses,
+        ])->render();
     }
 
     abstract public function viewItem(): string;
@@ -70,8 +85,27 @@ trait IsMenuTemplate
     /**
      * @throws Throwable
      */
-    public function renderItem(Menu $menu, MenuItem $item): string
-    {
-        return view($this->viewItem(), ['menu' => $menu, 'item' => $item])->render();
+    public function renderItem(
+        Menu $menu,
+        MenuItem $item,
+        Closure|array|string|null $containerItemsClasses = null,
+        Closure|array|string|null $containerItemClasses = null,
+        Closure|array|string|null $itemClasses = null,
+        ?string $itemActiveClasses = null,
+        ?string $itemContainsActiveClasses = null,
+    ): string {
+        $containerItemsClasses = (array) (is_callable($containerItemsClasses) ? $containerItemsClasses($item) : $containerItemsClasses);
+        $containerItemClasses = (array) (is_callable($containerItemClasses) ? $containerItemClasses($item) : $containerItemClasses);
+        $itemClasses = (array) (is_callable($itemClasses) ? $itemClasses($item) : $itemClasses);
+
+        return view($this->viewItem(), [
+            'menu' => $menu,
+            'item' => $item,
+            'containerItemsClasses' => $containerItemsClasses,
+            'containerItemClasses' => $containerItemClasses,
+            'itemClasses' => $itemClasses,
+            'itemActiveClasses' => $itemActiveClasses,
+            'itemContainsActiveClasses' => $itemContainsActiveClasses,
+        ])->render();
     }
 }

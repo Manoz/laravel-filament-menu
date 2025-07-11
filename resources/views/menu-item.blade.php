@@ -5,14 +5,14 @@
     /** @var Menu $menu */
     /** @var MenuItem $item */
 @endphp
-<li>
+<li @class($containerItemClasses)>
     @if ($item->link_type === LinkType::html)
         {!! $item->html !!}
     @elseif ($item->link_type !== LinkType::empty)
         <a href="{{ $item->href() }}"
-            {{ $menu->template->isActiveItem($item) ? 'data-active="true"' : ''}}
             @class([
-                ...$menu->template->htmlClassesMenuItem($menu, $item),
+                ...$itemClasses,
+                $menu->template->isActiveItem($item) ? ($itemActiveClasses ?? 'active') : '',
                 $item->htmlClasses
             ])
             {{ $item->target_blank ? 'target="_blank"' : '' }}
@@ -21,7 +21,7 @@
         </a>
     @else
         <div @class([
-            ...$menu->template->htmlClassesMenuItem($menu, $item),
+            ...$itemClasses,
             $item->htmlClasses
         ])>
             {{ $item->title }}
@@ -30,7 +30,10 @@
 
     @if ($item->children->isNotEmpty())
         <ul
-            {{ $menu->template->containtActiveItem($item) ? 'data-open="true"' : ''}}
+            @class([
+                ...$containerItemsClasses($item),
+                $menu->template->containtActiveItem($item) ? ($itemContainsActiveClasses ?? 'open') : '',
+            ])
         >
             @foreach($item->children as $item)
                 {!! $menu->template->renderItem($menu, $item) !!}

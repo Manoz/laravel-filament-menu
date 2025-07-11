@@ -6,16 +6,24 @@
 
 <nav role="navigation"
      aria-label="{{ $menu->aria_label ?? $menu->title ?? $menu->name }}"
-     @class($menu->template->htmlClassesMenu($menu))
+     @class($containerClasses)
 >
     @if ($menu->template->hasTitle())
-        <div>
+        <div @class($titleClasses)>
             {{ $menu->title ?? $menu->name }}
         </div>
     @endif
-    <ul>
+    <ul @class($containerItemsClasses())>
         @foreach($items as $item)
-            {!! $menu->template->renderItem($menu, $item) !!}
+            {!! $menu->template->renderItem(
+                $menu,
+                $item,
+                $containerItemsClasses,
+                $containerItemClasses,
+                $itemClasses,
+                $itemActiveClasses,
+                $itemContainsActiveClasses
+            ) !!}
         @endforeach
     </ul>
 </nav>

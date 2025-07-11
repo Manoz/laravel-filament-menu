@@ -2,6 +2,7 @@
 
 namespace Novius\LaravelFilamentMenu\View\Components;
 
+use Closure;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Component;
 use Novius\LaravelFilamentMenu\Models\Menu as MenuModel;
@@ -11,8 +12,17 @@ class Menu extends Component
 {
     protected ?MenuModel $menu = null;
 
-    public function __construct(string $menuSlug, ?string $locale = null)
-    {
+    public function __construct(
+        string $menuSlug,
+        ?string $locale = null,
+        protected Closure|array|string|null $containerClasses = null,
+        protected Closure|array|string|null $titleClasses = null,
+        protected Closure|array|string|null $containerItemsClasses = null,
+        protected Closure|array|string|null $containerItemClasses = null,
+        protected Closure|array|string|null $itemClasses = null,
+        protected string|null $itemActiveClasses = null,
+        protected string|null $itemContainsActiveClasses = null,
+    ) {
         $this->menu = MenuModel::query()
             ->where('slug', $menuSlug)
             ->where('locale', $locale ?? app()->getLocale())
@@ -35,6 +45,16 @@ class Menu extends Component
                 ->toTree();
         });
 
-        return $this->menu->template->render($this->menu, $items);
+        return $this->menu->template->render(
+            $this->menu,
+            $items,
+            $this->containerClasses,
+            $this->titleClasses,
+            $this->containerItemsClasses,
+            $this->containerItemClasses,
+            $this->itemClasses,
+            $this->itemActiveClasses,
+            $this->itemContainsActiveClasses,
+        );
     }
 }

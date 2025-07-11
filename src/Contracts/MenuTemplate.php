@@ -2,6 +2,7 @@
 
 namespace Novius\LaravelFilamentMenu\Contracts;
 
+use Closure;
 use Filament\Forms\Components\Component;
 use Kalnoy\Nestedset\Collection;
 use Novius\LaravelFilamentMenu\Models\Menu;
@@ -28,13 +29,27 @@ interface MenuTemplate
 
     public function view(): string;
 
-    public function htmlClassesMenu(Menu $menu): array;
-
-    public function htmlClassesMenuItem(Menu $menu, MenuItem $item): array;
-
     public function viewItem(): string;
 
-    public function render(Menu $menu, Collection $items): string;
+    public function render(
+        Menu $menu,
+        Collection $items,
+        Closure|array|string|null $containerClasses = null,
+        Closure|array|string|null $titleClasses = null,
+        Closure|array|string|null $containerItemsClasses = null,
+        Closure|array|string|null $containerItemClasses = null,
+        Closure|array|string|null $itemClasses = null,
+        ?string $itemActiveClasses = null,
+        ?string $itemContainsActiveClasses = null,
+    ): string;
 
-    public function renderItem(Menu $menu, MenuItem $item): string;
+    public function renderItem(
+        Menu $menu,
+        MenuItem $item,
+        Closure|array|string|null $containerItemsClasses = null,
+        Closure|array|string|null $containerItemClasses = null,
+        Closure|array|string|null $itemClasses = null,
+        ?string $itemActiveClasses = null,
+        ?string $itemContainsActiveClasses = null,
+    ): string;
 }

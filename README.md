@@ -69,7 +69,14 @@ You can display menu with :
 ```bladehtml
 <x-laravel-filament-menu::menu 
     menu-slug="slug-of-menu" 
-    locale="fr" {{-- optional, will use the current locale by default --}}   
+    locale="fr" {{-- optional, will use the current locale by default --}}
+    container-classes="p6" {{-- optional, null by default. Css classes for the menu container (<nav>), can be a string, an array or a Closure taking the menu as single paramater --}
+    title-classes="font-bold" {{-- optional, null by default. Css classes for the menu title (<div>), can be a string, an array or a Closure taking the menu as single paramater --}
+    container-items-classes="flex flex-col gap-x-6" {{-- optional, null by default. Css classes for the menu container of a list of items (<ul>), can be a string, an array or a Closure taking the item menu as single paramater --}
+    container-item-classes="p6" {{-- optional, null by default. Css classes for the item menu container (<li>), can be a string, an array or a Closure taking the item menu as single paramater --}
+    item-classes="p6" {{-- optional, null by default. Css classes for the item menu (<a> or <div>), can be a string, an array or a Closure taking the item menu as single paramater --}
+    item-active-classes="active" {{-- optional, 'active' by default. Css classes for the active item menu (<a>), must be a string --}
+    item-contains-active-classes="open" {{-- optional, 'open' by default. Css classes for item menu containers containing the active item (<a>), must be a string --}
 />
 ```
 
@@ -139,21 +146,22 @@ First the view to display the menu :
 ```bladehtml
 @php
     use Novius\LaravelFilamentMenu\Models\Menu;
-    /** @var Menu $menu */
 @endphp
-<nav>
+<nav role="navigation"
+     aria-label="{{ $menu->aria_label ?? $menu->title ?? $menu->name }}"
+     @class($containerClasses)
+>
     @if ($menu->template->hasTitle())
-    <div>
-        {{ $menu->title ?? $menu->name }}
-    </div>
+        <div @class($titleClasses)>
+            {{ $menu->title ?? $menu->name }}
+        </div>
     @endif
-    <ul>
+    <ul @class($containerItemsClasses)>
         @foreach($items as $item)
-            {!! $menu->template->renderItem($menu, $item) !!}
+            {!! $menu->template->renderItem($menu, $item, $containerItemsClasses, $containerItemClasses, $itemClasses) !!}
         @endforeach
     </ul>
 </nav>
-
 ```
 
 The the view to display an item of the menu
@@ -162,33 +170,34 @@ The the view to display an item of the menu
 @php
     use Novius\LaravelFilamentMenu\Enums\LinkType;use Novius\LaravelFilamentMenu\Models\Menu;
     use Novius\LaravelFilamentMenu\Models\MenuItem;
-
-    /** @var Menu $menu */
-    /** @var MenuItem $item */
 @endphp
-<li>
+<li @class($containerItemClasses)>
     @if ($item->link_type === LinkType::html)
         {!! $item->html !!}
-    @else
-        <a href="{{ $item->href() }}" 
-           @class([
-                $item->htmlClasses,
-                'active' => $menu->template->isActiveItem($item),
-           ]) 
+    @elseif ($item->link_type !== LinkType::empty)
+        <a href="{{ $item->href() }}"
+           {{ $menu->template->isActiveItem($item) ? 'data-active="true"' : ''}}
+            @class([
+                ...$itemClasses($item),
+                $item->htmlClasses
+            ])
             {{ $item->target_blank ? 'target="_blank"' : '' }}
         >
-            {{ $item->title }}
-            
-            {{-- If you add additionals fields on items, you can access it like this --}}
-            {{ $item->extras->date?->format('Y-m-d') ?? '' }} 
+                {{ $item->title }}
         </a>
+    @else
+        <div @class([
+             ...$itemClasses($item),
+             $item->htmlClasses
+        ])>
+            {{ $item->title }}
+        </div>
     @endif
 
     @if ($item->children->isNotEmpty())
-        <ul 
-            @class([
-                'open' =>  $menu->template->containtActiveItem($item),
-            ])
+        <ul
+            @class($containerItemsClasses)
+            {{ $menu->template->containtActiveItem($item) ? 'data-open="true"' : ''}}
         >
             @foreach($item->children as $item)
                 {!! $menu->template->renderItem($menu, $item) !!}
