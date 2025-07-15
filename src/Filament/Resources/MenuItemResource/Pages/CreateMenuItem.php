@@ -69,7 +69,10 @@ class CreateMenuItem extends CreateRecord
             return $this->parent_id;
         }
 
-        $this->parent_id = Route::current()?->parameter('parent');
+        $parent_id = Route::current()?->parameter('parent');
+        if ($parent_id) {
+            $this->parent_id = (int) $parent_id;
+        }
 
         return $this->parent_id;
     }
