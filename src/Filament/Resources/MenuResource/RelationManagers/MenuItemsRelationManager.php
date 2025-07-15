@@ -6,6 +6,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
@@ -36,7 +37,7 @@ class MenuItemsRelationManager extends RelationManager
                     ->url(fn (MenuItem $record) => MenuItemResource::getUrl('edit', ['record' => $record])),
                 DeleteAction::make()
                     ->successRedirectUrl(MenuResource::getUrl('edit', ['record' => $this->ownerRecord])),
-            ]);
+            ], ActionsPosition::BeforeColumns);
     }
 
     public function isReadOnly(): bool
