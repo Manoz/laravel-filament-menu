@@ -31,7 +31,7 @@
     @if ($item->children->isNotEmpty())
         <ul
             @class([
-                ...$containerItemsClasses($item),
+                ...$containerItemsClasses,
                 $menu->template->containtActiveItem($item) ? ($itemContainsActiveClasses ?? 'open') : '',
             ])
         >
