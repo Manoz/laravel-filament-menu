@@ -9,9 +9,9 @@
      @class($containerClasses)
 >
     @if ($menu->template->hasTitle())
-        <div @class($titleClasses)>
+        <span @class($titleClasses)>
             {{ $menu->title ?? $menu->name }}
-        </div>
+        </span>
     @endif
     <ul @class($containerItemsClasses())>
         @foreach($items as $item)

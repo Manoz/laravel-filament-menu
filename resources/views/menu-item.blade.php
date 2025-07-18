@@ -13,19 +13,19 @@
             @class([
                 ...$itemClasses,
                 $menu->template->isActiveItem($item) ? ($itemActiveClasses ?? 'active') : '',
-                $item->htmlClasses
+                $item->html_classes
             ])
             {{ $item->target_blank ? 'target="_blank"' : '' }}
         >
             {{ $item->title }}
         </a>
     @else
-        <div @class([
+        <span @class([
             ...$itemClasses,
-            $item->htmlClasses
+            $item->html_classes
         ])>
             {{ $item->title }}
-        </div>
+        </span>
     @endif
 
     @if ($item->children->isNotEmpty())
