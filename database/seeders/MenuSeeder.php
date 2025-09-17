@@ -27,13 +27,13 @@ abstract class MenuSeeder extends Seeder
 
         Menu::query()
             ->whereNotIn('slug', array_keys($menus_config))
-            ->orWhereNotIn('locale', Locales::installed()->pluck('code'))
+            ->orWhereNotIn('locale', $this->getLocales()->pluck('code'))
             ->each(function (Menu $menu) {
                 $menu->items()->delete();
                 $menu->delete();
             });
 
-        $locales = Locales::installed();
+        $locales = $this->getLocales();
         foreach ($menus_config as $slug => $config) {
             $menuParent = Menu::query()->firstWhere('slug', $slug);
 
