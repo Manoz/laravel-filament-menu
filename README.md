@@ -211,6 +211,41 @@ The the view to display an item of the menu
 
 Laravel Filament Menu uses [Laravel Linkable](https://github.com/novius/laravel-linkable) to manage linkable routes and models. Please read the documentation.
 
+### Seeder
+
+You can use the `\Novius\LaravelFilamentMenu\Database\Seeders\MenuSeeder` to create menus.
+
+Create a new seeder, extend the class and define the `menus()` method. You can also override the `postCreate()` method to add custom logic.
+
+```php
+namespace Database\Seeders;
+
+use Novius\LaravelFilamentMenu\Templates\MenuTemplateWithoutTitle;
+use Novius\LaravelFilamentMenu\Templates\MenuTemplateWithTitle;
+
+class MenuSeeder extends \Novius\LaravelFilamentMenu\Database\Seeders\MenuSeeder
+{
+    protected function menus(): array
+    {
+        return [
+            'header' => [
+                'name' => 'Header',
+                'template' => MenuTemplateWithoutTitle::class,
+            ],
+            'footer' => [
+                'name' => 'Footer',
+                'template' => MenuTemplateWithTitle::class,
+            ],
+        ];
+    }
+    
+    protected function postCreate(array $config, LocaleData $locale, Menu $menu): void
+    {
+        // Add custom logic here
+    }
+}
+```
+
 ## Lint
 
 Run php-cs with:
