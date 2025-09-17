@@ -67,6 +67,7 @@ abstract class MenuSeeder extends Seeder
                     $menu = Menu::withLocale($locale->code)->firstWhere('slug', $slug);
                     if ($menu === null) {
                         $menu = new Menu;
+                        $menu->locale = $locale->code;
                     }
                     $menu->name = $this->getLocalizedString($locale, $name);
                     $menu->title = $this->getLocalizedString($locale, $title);
