@@ -1,6 +1,6 @@
 <?php
 
-namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuResource\Pages;
+namespace Novius\LaravelFilamentMenu\Filament\Resources\Menu\Pages;
 
 use Illuminate\Database\Eloquent\Model;
 use LaravelLang\Locales\Facades\Locales;

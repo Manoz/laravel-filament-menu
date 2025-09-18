@@ -1,6 +1,6 @@
 <?php
 
-namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItemResource\RelationManagers;
+namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItem\RelationManagers;
 
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItemResource\Pages;
+namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItem\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
