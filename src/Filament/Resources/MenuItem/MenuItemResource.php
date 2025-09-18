@@ -2,6 +2,7 @@
 
 namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItem;
 
+use BackedEnum;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Exception;
 use Filament\Forms\Components\Checkbox;
@@ -34,7 +35,7 @@ class MenuItemResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-link';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-link';
 
     protected static bool $isGloballySearchable = false;
 
