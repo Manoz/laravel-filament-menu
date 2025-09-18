@@ -3,16 +3,16 @@
 namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuResource\RelationManagers;
 
 use Filament\Actions\CreateAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Novius\FilamentRelationNested\Filament\Resources\RelationManagers\TreeRelationManager;
 use Novius\FilamentRelationNested\Filament\Tables\Actions\FixTreeAction;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
-use Novius\LaravelFilamentMenu\Filament\Resources\MenuItemResource;
-use Novius\LaravelFilamentMenu\Filament\Resources\MenuResource;
+use Novius\LaravelFilamentMenu\Filament\Resources\Menu\MenuResource;
+use Novius\LaravelFilamentMenu\Filament\Resources\MenuItem\MenuItemResource;
 use Novius\LaravelFilamentMenu\Models\MenuItem;
 
 class MenuItemsTreeRelationManager extends TreeRelationManager

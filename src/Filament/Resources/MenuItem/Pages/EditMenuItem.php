@@ -6,7 +6,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
-use Novius\LaravelFilamentMenu\Filament\Resources\MenuResource;
+use Novius\LaravelFilamentMenu\Filament\Resources\Menu\MenuResource;
 use Novius\LaravelFilamentMenu\Models\MenuItem;
 
 class EditMenuItem extends EditRecord
