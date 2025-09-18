@@ -83,8 +83,8 @@ class MenuResource extends Resource
                     ),
 
                 Select::make('template')
-                    ->afterStateHydrated(function (Select $component, ?MenuTemplate $state) {
-                        $component->state($state?->key());
+                    ->afterStateHydrated(function (Select $component, ?MenuTemplate $rawState) {
+                        $component->state($rawState?->key());
                     })
                     ->label(trans('laravel-filament-menu::menu.template'))
                     ->options(MenuManager::templates()->mapWithKeys(fn (MenuTemplate $template) => [$template->key() => $template->name()]))
@@ -144,7 +144,7 @@ class MenuResource extends Resource
                 TranslationsColumn::make('translations'),
 
                 TextColumn::make('template')
-                    ->formatStateUsing(fn (MenuTemplate $state) => $state->name())
+                    ->formatStateUsing(fn (MenuTemplate $rawState) => $rawState->name())
                     ->label(trans('laravel-filament-menu::menu.template'))
                     ->sortable()
                     ->badge()
