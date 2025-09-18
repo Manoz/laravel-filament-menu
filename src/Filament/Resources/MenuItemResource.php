@@ -2,16 +2,17 @@
 
 namespace Novius\LaravelFilamentMenu\Filament\Resources;
 
+use Filament\Forms\Components\CodeEditor;
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Grid;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Exception;
 use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -26,7 +27,6 @@ use Novius\LaravelFilamentMenu\Filament\Resources\MenuItemResource\RelationManag
 use Novius\LaravelFilamentMenu\Models\Menu;
 use Novius\LaravelFilamentMenu\Models\MenuItem;
 use Novius\LaravelLinkable\Filament\Forms\Components\Linkable;
-use Wiebenieuwenhuis\FilamentCodeEditor\Components\CodeEditor;
 
 class MenuItemResource extends Resource
 {
@@ -34,7 +34,7 @@ class MenuItemResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static ?string $navigationIcon = 'heroicon-o-link';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-link';
 
     protected static bool $isGloballySearchable = false;
 
@@ -59,12 +59,12 @@ class MenuItemResource extends Resource
         return trans('laravel-filament-menu::menu.menu_items');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
         $getMenu = static fn ($menu_id) => $menu_id ? Menu::find($menu_id) : null;
 
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Hidden::make('menu_id'),
 
                 SelectTree::make('parent_id')

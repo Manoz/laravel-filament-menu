@@ -2,21 +2,21 @@
 
 namespace Novius\LaravelFilamentMenu\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\ViewAction;
+use Filament\Tables\Enums\RecordActionsPosition;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Exception;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Validation\Rules\Unique;
@@ -40,7 +40,7 @@ class MenuResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationIcon = 'heroicon-o-bars-3-bottom-right';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-bars-3-bottom-right';
 
     protected static ?string $recordRouteKeyName = 'id';
 
@@ -59,10 +59,10 @@ class MenuResource extends Resource
         return trans('laravel-filament-menu::menu.menus_label');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 $title = TextInput::make('name')
                     ->label(trans('laravel-filament-menu::menu.name'))
                     ->required(),
@@ -168,14 +168,14 @@ class MenuResource extends Resource
                     ->label(trans('laravel-filament-menu::menu.template'))
                     ->options(fn () => MenuManager::templates()->mapWithKeys(fn (MenuTemplate $template) => [$template->key() => $template->name()])),
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
                 ActionGroup::make([
                     ViewAction::make(),
                 ]),
-            ], ActionsPosition::BeforeColumns)
-            ->bulkActions([
+            ], RecordActionsPosition::BeforeColumns)
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

@@ -2,11 +2,12 @@
 
 namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItemResource\RelationManagers;
 
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Tables\Enums\RecordActionsPosition;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -46,7 +47,7 @@ class MenuItemsRelationManager extends RelationManager
             ->pluralModelLabel(MenuItemResource::getPluralModelLabel())
             ->recordTitleAttribute('title')
             ->headerActions([
-                Tables\Actions\CreateAction::make()
+                CreateAction::make()
                     ->url(MenuItemResource::getUrl('create', ['menu' => $this->ownerRecord->menu, 'parent' => $this->ownerRecord])),
             ])
             ->actions([
@@ -54,7 +55,7 @@ class MenuItemsRelationManager extends RelationManager
                     ->url(fn (MenuItem $record) => MenuItemResource::getUrl('edit', ['record' => $record])),
                 DeleteAction::make()
                     ->successRedirectUrl(MenuItemResource::getUrl('edit', ['record' => $this->ownerRecord])),
-            ], ActionsPosition::BeforeColumns);
+            ], RecordActionsPosition::BeforeColumns);
     }
 
     public function isReadOnly(): bool
