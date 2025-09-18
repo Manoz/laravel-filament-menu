@@ -24,7 +24,7 @@
         "novius/laravel-filament-slug": "dev-dev",
         "novius/laravel-filament-translatable": "dev-dev",
         "novius/laravel-json-casted": "^1.2",
-        "novius/laravel-linkable": "dev-main",
+        "novius/laravel-linkable": "dev-dev",
         "spatie/laravel-sluggable": "^3.4.0"
     },
     "require-dev": {

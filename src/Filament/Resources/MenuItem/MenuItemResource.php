@@ -34,7 +34,7 @@ class MenuItemResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-link';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-link';
 
     protected static bool $isGloballySearchable = false;
 
@@ -130,7 +130,7 @@ class MenuItemResource extends Resource
                     ->setLocale(function (Get $get) use ($getMenu) {
                         return $getMenu($get('menu_id'))?->locale;
                     })
-                    ->hidden(fn (Get $get) => $get('link_type') !== LinkType::internal_link->value)
+                    ->hidden(fn (Get $get) => $get('link_type') !== LinkType::internal_link)
                     ->afterStateHydrated(function (Get $get, Linkable $component) {
                         $linkable_type = $get('linkable_type');
                         $linkable_id = $get('linkable_id');
@@ -161,7 +161,7 @@ class MenuItemResource extends Resource
                     ->rules([
                         'required_if:link_type,'.LinkType::external_link->value, 'max:191',
                     ])
-                    ->hidden(fn (Get $get) => $get('link_type') !== LinkType::external_link->value)
+                    ->hidden(fn (Get $get) => $get('link_type') !== LinkType::external_link)
                     ->helperText(trans('laravel-filament-menu::menu.must_start_with_http'))
                     ->url(),
 
@@ -169,7 +169,7 @@ class MenuItemResource extends Resource
                     ->label(trans('laravel-filament-menu::menu.html'))
                     ->rules('required_if:link_type,'.LinkType::html->value)
                     ->helperText(trans('laravel-filament-menu::menu.help_code'))
-                    ->hidden(fn (Get $get) => $get('link_type') !== LinkType::html->value),
+                    ->hidden(fn (Get $get) => $get('link_type') !== LinkType::html),
 
                 TextInput::make('html_classes')
                     ->label(trans('laravel-filament-menu::menu.html_classes'))
@@ -178,7 +178,7 @@ class MenuItemResource extends Resource
 
                 Checkbox::make('target_blank')
                     ->label(trans('laravel-filament-menu::menu.target_blank'))
-                    ->hidden(fn (Get $get) => $get('link_type') === LinkType::empty->value)
+                    ->hidden(fn (Get $get) => $get('link_type') === LinkType::empty)
                     ->inline(false),
 
                 Grid::make()

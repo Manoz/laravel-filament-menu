@@ -2,6 +2,7 @@
 
 namespace Novius\LaravelFilamentMenu\Filament\Resources\Menu;
 
+use BackedEnum;
 use Exception;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
@@ -28,6 +29,7 @@ use Novius\LaravelFilamentMenu\Filament\Resources\Menu\Pages\ListMenu;
 use Novius\LaravelFilamentMenu\Filament\Resources\Menu\Pages\ViewMenu;
 use Novius\LaravelFilamentMenu\Filament\Resources\Menu\RelationManagers\MenuItemsRelationManager;
 use Novius\LaravelFilamentMenu\Filament\Resources\Menu\RelationManagers\MenuItemsTreeRelationManager;
+use Novius\LaravelFilamentMenu\StateCasts\MenuTemplateStateCast;
 use Novius\LaravelFilamentSlug\Filament\Forms\Components\Slug;
 use Novius\LaravelFilamentTranslatable\Filament\Forms\Components\Locale;
 use Novius\LaravelFilamentTranslatable\Filament\Tables\Columns\LocaleColumn;
@@ -40,7 +42,7 @@ class MenuResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-bars-3-bottom-right';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-bars-3-bottom-right';
 
     protected static ?string $recordRouteKeyName = 'id';
 
@@ -83,9 +85,7 @@ class MenuResource extends Resource
                     ),
 
                 Select::make('template')
-                    ->afterStateHydrated(function (Select $component, ?MenuTemplate $rawState) {
-                        $component->state($rawState?->key());
-                    })
+                    ->stateCast(app(MenuTemplateStateCast::class))
                     ->label(trans('laravel-filament-menu::menu.template'))
                     ->options(MenuManager::templates()->mapWithKeys(fn (MenuTemplate $template) => [$template->key() => $template->name()]))
                     ->required()
@@ -100,8 +100,6 @@ class MenuResource extends Resource
                     ->hidden(function (Get $get) {
                         $template = $get('template');
                         if ($template !== null) {
-                            $template = MenuManager::template($template);
-
                             return ! $template->hasTitle();
                         }
 
@@ -144,7 +142,7 @@ class MenuResource extends Resource
                 TranslationsColumn::make('translations'),
 
                 TextColumn::make('template')
-                    ->formatStateUsing(fn (MenuTemplate $rawState) => $rawState->name())
+                    ->formatStateUsing(fn (MenuTemplate $state) => $state->name())
                     ->label(trans('laravel-filament-menu::menu.template'))
                     ->sortable()
                     ->badge()
