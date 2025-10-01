@@ -1,15 +1,15 @@
 <?php
 
-namespace Novius\LaravelFilamentMenu\Filament\Resources\Menu\Pages;
+namespace Novius\LaravelFilamentMenu\Filament\Resources\Menus\Pages;
 
 use Filament\Actions\DeleteAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
-use Filament\Resources\Pages\ViewRecord;
+use Filament\Actions\ViewAction;
+use Filament\Resources\Pages\EditRecord;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
 
-class ViewMenu extends ViewRecord
+class EditMenu extends EditRecord
 {
     public static function getResource(): string
     {
@@ -19,7 +19,7 @@ class ViewMenu extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
+            ViewAction::make(),
             DeleteAction::make(),
             ForceDeleteAction::make(),
             RestoreAction::make(),

@@ -1,6 +1,6 @@
 <?php
 
-namespace Novius\LaravelFilamentMenu\Filament\Resources\Menu\RelationManagers;
+namespace Novius\LaravelFilamentMenu\Filament\Resources\Menus\RelationManagers;
 
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 use Novius\FilamentRelationNested\Filament\Resources\RelationManagers\TreeRelationManager;
 use Novius\FilamentRelationNested\Filament\Tables\Actions\FixTreeAction;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
-use Novius\LaravelFilamentMenu\Filament\Resources\Menu\MenuResource;
-use Novius\LaravelFilamentMenu\Filament\Resources\MenuItem\MenuItemResource;
+use Novius\LaravelFilamentMenu\Filament\Resources\Menus\MenuResource;
+use Novius\LaravelFilamentMenu\Filament\Resources\MenuItems\MenuItemResource;
 use Novius\LaravelFilamentMenu\Models\MenuItem;
 
 class MenuItemsTreeRelationManager extends TreeRelationManager

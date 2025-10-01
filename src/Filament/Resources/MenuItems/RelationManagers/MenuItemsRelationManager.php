@@ -1,6 +1,6 @@
 <?php
 
-namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItem\RelationManagers;
+namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItems\RelationManagers;
 
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -11,7 +11,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
-use Novius\LaravelFilamentMenu\Filament\Resources\MenuItem\MenuItemResource;
+use Novius\LaravelFilamentMenu\Filament\Resources\MenuItems\MenuItemResource;
 use Novius\LaravelFilamentMenu\Models\MenuItem;
 
 class MenuItemsRelationManager extends RelationManager

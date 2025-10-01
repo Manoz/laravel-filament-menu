@@ -1,6 +1,6 @@
 <?php
 
-namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItem;
+namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItems;
 
 use BackedEnum;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
@@ -22,9 +22,9 @@ use Illuminate\Database\Eloquent\Model;
 use Novius\FilamentRelationNested\Filament\Tables\Columns\TreeColumn;
 use Novius\LaravelFilamentMenu\Enums\LinkType;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
-use Novius\LaravelFilamentMenu\Filament\Resources\MenuItem\Pages\CreateMenuItem;
-use Novius\LaravelFilamentMenu\Filament\Resources\MenuItem\Pages\EditMenuItem;
-use Novius\LaravelFilamentMenu\Filament\Resources\MenuItem\RelationManagers\MenuItemsRelationManager;
+use Novius\LaravelFilamentMenu\Filament\Resources\MenuItems\Pages\CreateMenuItem;
+use Novius\LaravelFilamentMenu\Filament\Resources\MenuItems\Pages\EditMenuItem;
+use Novius\LaravelFilamentMenu\Filament\Resources\MenuItems\RelationManagers\MenuItemsRelationManager;
 use Novius\LaravelFilamentMenu\Models\Menu;
 use Novius\LaravelFilamentMenu\Models\MenuItem;
 use Novius\LaravelLinkable\Filament\Forms\Components\Linkable;

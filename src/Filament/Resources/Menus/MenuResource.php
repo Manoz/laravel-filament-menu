@@ -1,6 +1,6 @@
 <?php
 
-namespace Novius\LaravelFilamentMenu\Filament\Resources\Menu;
+namespace Novius\LaravelFilamentMenu\Filament\Resources\Menus;
 
 use BackedEnum;
 use Exception;
@@ -23,12 +23,12 @@ use Filament\Tables\Table;
 use Illuminate\Validation\Rules\Unique;
 use Novius\LaravelFilamentMenu\Contracts\MenuTemplate;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
-use Novius\LaravelFilamentMenu\Filament\Resources\Menu\Pages\CreateMenu;
-use Novius\LaravelFilamentMenu\Filament\Resources\Menu\Pages\EditMenu;
-use Novius\LaravelFilamentMenu\Filament\Resources\Menu\Pages\ListMenu;
-use Novius\LaravelFilamentMenu\Filament\Resources\Menu\Pages\ViewMenu;
-use Novius\LaravelFilamentMenu\Filament\Resources\Menu\RelationManagers\MenuItemsRelationManager;
-use Novius\LaravelFilamentMenu\Filament\Resources\Menu\RelationManagers\MenuItemsTreeRelationManager;
+use Novius\LaravelFilamentMenu\Filament\Resources\Menus\Pages\CreateMenu;
+use Novius\LaravelFilamentMenu\Filament\Resources\Menus\Pages\EditMenu;
+use Novius\LaravelFilamentMenu\Filament\Resources\Menus\Pages\ListMenu;
+use Novius\LaravelFilamentMenu\Filament\Resources\Menus\Pages\ViewMenu;
+use Novius\LaravelFilamentMenu\Filament\Resources\Menus\RelationManagers\MenuItemsRelationManager;
+use Novius\LaravelFilamentMenu\Filament\Resources\Menus\RelationManagers\MenuItemsTreeRelationManager;
 use Novius\LaravelFilamentMenu\StateCasts\MenuTemplateStateCast;
 use Novius\LaravelFilamentSlug\Filament\Forms\Components\Slug;
 use Novius\LaravelFilamentTranslatable\Filament\Forms\Components\Locale;

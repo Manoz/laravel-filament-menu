@@ -14,8 +14,8 @@ return [
      * Resources used to manage your menus.
      */
     'resources' => [
-        'menu' => \Novius\LaravelFilamentMenu\Filament\Resources\Menu\MenuResource::class,
-        'menu_item' => \Novius\LaravelFilamentMenu\Filament\Resources\MenuItem\MenuItemResource::class,
+        'menu' => \Novius\LaravelFilamentMenu\Filament\Resources\Menus\MenuResource::class,
+        'menu_item' => \Novius\LaravelFilamentMenu\Filament\Resources\MenuItems\MenuItemResource::class,
     ],
 
     /*

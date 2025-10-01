@@ -1,6 +1,6 @@
 <?php
 
-namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItem\Pages;
+namespace Novius\LaravelFilamentMenu\Filament\Resources\MenuItems\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Route;
