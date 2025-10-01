@@ -8,11 +8,11 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Novius\FilamentRelationNested\Filament\Actions\FixTreeAction;
 use Novius\FilamentRelationNested\Filament\Resources\RelationManagers\TreeRelationManager;
-use Novius\FilamentRelationNested\Filament\Tables\Actions\FixTreeAction;
 use Novius\LaravelFilamentMenu\Facades\MenuManager;
-use Novius\LaravelFilamentMenu\Filament\Resources\Menus\MenuResource;
 use Novius\LaravelFilamentMenu\Filament\Resources\MenuItems\MenuItemResource;
+use Novius\LaravelFilamentMenu\Filament\Resources\Menus\MenuResource;
 use Novius\LaravelFilamentMenu\Models\MenuItem;
 
 class MenuItemsTreeRelationManager extends TreeRelationManager
