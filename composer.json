@@ -20,11 +20,11 @@
         "filament/filament": "^4.0",
         "kalnoy/nestedset": "^6.0.6",
         "laravel/framework": "^11.0 | ^12.0",
-        "novius/filament-relation-nested": "dev-dev",
-        "novius/laravel-filament-slug": "dev-dev",
-        "novius/laravel-filament-translatable": "dev-dev",
+        "novius/filament-relation-nested": "dev-main",
+        "novius/laravel-filament-slug": "dev-main",
+        "novius/laravel-filament-translatable": "dev-main",
         "novius/laravel-json-casted": "^1.2",
-        "novius/laravel-linkable": "dev-dev",
+        "novius/laravel-linkable": "dev-main",
         "spatie/laravel-sluggable": "^3.4.0"
     },
     "require-dev": {
