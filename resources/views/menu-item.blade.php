@@ -10,9 +10,10 @@
         {!! $item->html !!}
     @elseif ($item->link_type !== LinkType::empty)
         <a href="{{ $item->href() }}"
+            {{ $menu->template->isActiveItem($item) ? 'data-active="true"' : ''}}
             @class([
                 ...$itemClasses,
-                $menu->template->isActiveItem($item) ? ($itemActiveClasses ?? 'active') : '',
+                $menu->template->isActiveItem($item) ? $itemActiveClasses : '',
                 $item->html_classes
             ])
             {{ $item->target_blank ? 'target="_blank"' : '' }}
@@ -30,9 +31,10 @@
 
     @if ($item->children->isNotEmpty())
         <ul
+            {{ $menu->template->containtActiveItem($item) ? 'data-open="true"' : ''}}
             @class([
                 ...$containerItemsClasses,
-                $menu->template->containtActiveItem($item) ? ($itemContainsActiveClasses ?? 'open') : '',
+                $menu->template->containtActiveItem($item) ? $itemContainsActiveClasses : '',
             ])
         >
             @foreach($item->children as $item)

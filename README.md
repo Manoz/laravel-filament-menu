@@ -69,15 +69,60 @@ You can display menu with :
 ```bladehtml
 <x-laravel-filament-menu::menu 
     menu-slug="slug-of-menu" 
-    locale="fr" {{-- optional, will use the current locale by default --}}
-    container-classes="p6" {{-- optional, null by default. Css classes for the menu container (<nav>), can be a string, an array or a Closure taking the menu as single paramater --}
-    title-classes="font-bold" {{-- optional, null by default. Css classes for the menu title (<div>), can be a string, an array or a Closure taking the menu as single paramater --}
-    container-items-classes="flex flex-col gap-x-6" {{-- optional, null by default. Css classes for the menu container of a list of items (<ul>), can be a string, an array or a Closure taking the item menu as single paramater --}
-    container-item-classes="p6" {{-- optional, null by default. Css classes for the item menu container (<li>), can be a string, an array or a Closure taking the item menu as single paramater --}
-    item-classes="p6" {{-- optional, null by default. Css classes for the item menu (<a> or <div>), can be a string, an array or a Closure taking the item menu as single paramater --}
-    item-active-classes="active" {{-- optional, 'active' by default. Css classes for the active item menu (<a>), must be a string --}
-    item-contains-active-classes="open" {{-- optional, 'open' by default. Css classes for item menu containers containing the active item (<a>), must be a string --}
+    locale="fr"
+    container-classes="p6"
+    title-classes="font-bold"
+    container-items-classes="flex flex-col gap-x-6"
+    container-item-classes="p6"
+    item-classes="p6"
+    item-active-classes="active"
+    item-contains-active-classes="open"
 />
+```
+    
+* `locale` : optional, will use the current locale by default
+* `container-classes` : optional, null by default. Css classes for the menu container (`<nav>`), can be a string, an array or a Closure taking the menu as single paramater
+* `title-classes` : optional, null by default. Css classes for the menu title (`<div>`), can be a string, an array or a Closure taking the menu as single paramater
+* `container-items-classes` : optional, null by default. Css classes for the menu container of a list of items (`<ul>`), can be a string, an array or a Closure taking the item menu as single paramater
+* `container-item-classes` : optional, null by default. Css classes for the item menu container (`<li>`), can be a string, an array or a Closure taking the item menu as single paramater
+* `item-classes` : optional, null by default. Css classes for the item menu (`<a>` or `<div>`), can be a string, an array or a Closure taking the item menu as single paramater
+* `item-active-classes` : optional, null by default. Css classes for the active item menu (`<a>`), must be a string. `data-active="true"` attribute will be added to the item menu if the item is active.
+* `item-contains-active-classes` : optional, null by default. Css classes for item menu containers (`<ul>`) containing the active item (`<a>`), must be a string. `data-open="true"` attribute will be added to the item menu if the item is active.
+
+Here the sample of the css classes implemenations in HTML :
+
+```bladehtml
+<nav role="navigation"
+     aria-label="{{ $menu->aria_label ?? $menu->title ?? $menu->name }}"
+     class="{-- container-classes --}"
+>
+  <span class="{-- title-classes --}">{{ $menu->title ?? $menu->name }}</span>
+  <ul class="{-- container-items-classes --}">
+    <li class="{-- container-item-classes --}">
+      <a href="{{ $item->href() }}" class="{-- item-classes --}" >{{ $item->title }}</a>
+    </li>
+    <li class="{-- container-item-classes --}">
+      <a href="{{ $item->href() }}" class="{-- item-classes --}" >{{ $item->title }}</a>
+
+      <ul class="{-- container-items-classes & item-contains-active-classes --}" data-open="true">
+        <li class="{-- container-item-classes --}">
+          <a href="{{ $item->href() }}" class="{-- item-classes --}" >{{ $item->title }}</a>
+        </li>
+        <li class="{-- container-item-classes --}">
+          <a href="{{ $item->href() }}"
+             data-active="true"
+             class="{-- item-classes & item-active-classes --}"
+          >
+            {{ $item->title }}
+          </a>
+        </li>
+        <li class="{-- container-item-classes --}">
+          <a href="{{ $item->href() }}" class="{-- item-classes --}" >{{ $item->title }}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 ```
 
 ### Write your owned template
