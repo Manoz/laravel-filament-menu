@@ -64,6 +64,7 @@ class MenuItemsTreeRelationManager extends TreeRelationManager
         $menu = $this->ownerRecord;
         $maxDepth = $menu->template->maxDepth();
 
+        /** @phpstan-ignore-next-line */
         /** @var Model&NodeTrait $parentNode */
         $parentNode = $node->query()->findOrFail($parent);
         $newDepth = $parentNode->ancestors->count() + 1;
