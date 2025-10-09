@@ -30,4 +30,6 @@ return [
     'template_without_title' => 'Menu without title',
     'sub_menus' => 'Sub menus',
     'tree' => 'Menu items tree',
+
+    'max_depth_reached' => 'The maximum depth is reached: max_depth',
 ];

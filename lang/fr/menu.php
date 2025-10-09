@@ -30,4 +30,6 @@ return [
     'template_without_title' => 'Menu sans titre',
     'sub_menus' => 'Sous-menus',
     'tree' => 'Entrées menu arborescence',
+
+    'max_depth_reached' => 'Le maximum de profondeur est atteint :max_depth',
 ];
