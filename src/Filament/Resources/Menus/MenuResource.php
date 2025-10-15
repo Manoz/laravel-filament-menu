@@ -88,6 +88,7 @@ class MenuResource extends Resource
                     ->stateCast(app(MenuTemplateStateCast::class))
                     ->label(trans('laravel-filament-menu::menu.template'))
                     ->options(MenuManager::templates()->mapWithKeys(fn (MenuTemplate $template) => [$template->key() => $template->name()]))
+                    ->getOptionLabelUsing(fn (?MenuTemplate $value) => $value?->key())
                     ->required()
                     ->live(),
 
