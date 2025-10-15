@@ -10,6 +10,10 @@ class MenuTemplateStateCast implements StateCast
 {
     public function get(mixed $state): ?MenuTemplate
     {
+        if (is_null($state)) {
+            return null;
+        }
+
         return MenuManager::template($state);
     }
 
