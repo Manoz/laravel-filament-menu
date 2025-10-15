@@ -54,29 +54,14 @@ trait IsMenuTemplate
     public function render(
         Menu $menu,
         Collection $items,
-        Closure|array|string|null $containerClasses = null,
-        Closure|array|string|null $titleClasses = null,
-        Closure|array|string|null $containerItemsClasses = null,
-        Closure|array|string|null $containerItemClasses = null,
-        Closure|array|string|null $itemClasses = null,
-        ?string $itemActiveClasses = null,
-        ?string $itemContainsActiveClasses = null,
-
+        Closure|string|null $titleTag = 'span',
     ): string {
-        $containerClasses = (array) (is_callable($containerClasses) ? $containerClasses($menu) : $containerClasses);
-        $titleClasses = (array) (is_callable($titleClasses) ? $titleClasses($menu) : $titleClasses);
-        $containerItemsClassesCallback = static fn (?MenuItem $item = null) => (array) (is_callable($containerItemsClasses) ? $containerItemsClasses($item) : $containerItemsClasses);
+        $titleTag = (string) (is_callable($titleTag) ? $titleTag($menu) : $titleTag);
 
         return view($this->view(), [
             'menu' => $menu,
             'items' => $items,
-            'containerClasses' => $containerClasses,
-            'titleClasses' => $titleClasses,
-            'containerItemsClasses' => $containerItemsClassesCallback,
-            'containerItemClasses' => $containerItemClasses,
-            'itemClasses' => $itemClasses,
-            'itemActiveClasses' => $itemActiveClasses,
-            'itemContainsActiveClasses' => $itemContainsActiveClasses,
+            'title'=> $titleTag,
         ])->render();
     }
 
@@ -88,24 +73,14 @@ trait IsMenuTemplate
     public function renderItem(
         Menu $menu,
         MenuItem $item,
-        Closure|array|string|null $containerItemsClasses = null,
-        Closure|array|string|null $containerItemClasses = null,
-        Closure|array|string|null $itemClasses = null,
-        ?string $itemActiveClasses = null,
-        ?string $itemContainsActiveClasses = null,
+        Closure|string|null $itemEmptyTag = 'span',
     ): string {
-        $containerItemsClasses = (array) (is_callable($containerItemsClasses) ? $containerItemsClasses($item) : $containerItemsClasses);
-        $containerItemClasses = (array) (is_callable($containerItemClasses) ? $containerItemClasses($item) : $containerItemClasses);
-        $itemClasses = (array) (is_callable($itemClasses) ? $itemClasses($item) : $itemClasses);
+        $itemEmptyTag = (string) (is_callable($itemEmptyTag) ? $itemEmptyTag($item) : $itemEmptyTag);
 
         return view($this->viewItem(), [
             'menu' => $menu,
             'item' => $item,
-            'containerItemsClasses' => $containerItemsClasses,
-            'containerItemClasses' => $containerItemClasses,
-            'itemClasses' => $itemClasses,
-            'itemActiveClasses' => $itemActiveClasses,
-            'itemContainsActiveClasses' => $itemContainsActiveClasses,
+            'itemEmptyTag' => $itemEmptyTag,
         ])->render();
     }
 }

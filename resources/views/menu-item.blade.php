@@ -1,5 +1,6 @@
 @php
-    use Novius\LaravelFilamentMenu\Enums\LinkType;use Novius\LaravelFilamentMenu\Models\Menu;
+    use Novius\LaravelFilamentMenu\Enums\LinkType;
+    use Novius\LaravelFilamentMenu\Models\Menu;
     use Novius\LaravelFilamentMenu\Models\MenuItem;
 
     /** @var Menu $menu */
