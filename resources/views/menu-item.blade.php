@@ -14,10 +14,9 @@
         {!! $item->html !!}
     @elseif ($item->link_type !== LinkType::empty)
         <a href="{{ $item->href() }}"
-            {{ $menu->template->isActiveItem($item) ? 'data-active="true"' : ''}}
             @class([
                 'lfm-item',
-                'lfm--active' => $menu->template->isActiveItem($item),
+                'lfm-item--active' => $menu->template->isActiveItem($item),
                 $item->html_classes
             ])
             {{ $item->target_blank ? 'target="_blank"' : '' }}
@@ -25,7 +24,7 @@
             {{ $item->title }}
         </a>
     @else
-        <{{$itemEmptyTag}} @class(['lfm-item lfm--is-empty', $item->html_classes])>
+        <{{$itemEmptyTag}} @class(['lfm-item lfm-item--is-empty', $item->html_classes])>
             {{ $item->title }}
         </{{$itemEmptyTag}}>
     @endif
