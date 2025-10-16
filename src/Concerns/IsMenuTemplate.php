@@ -25,7 +25,7 @@ trait IsMenuTemplate
         return $item->href() === url()->current();
     }
 
-    public function containtActiveItem(MenuItem $item): bool
+    public function containsActiveItem(MenuItem $item): bool
     {
         foreach ($item->descendants as $descendant) {
             if ($this->isActiveItem($descendant)) {
@@ -55,13 +55,16 @@ trait IsMenuTemplate
         Menu $menu,
         Collection $items,
         Closure|string|null $titleTag = 'span',
+        Closure|string|null $itemEmptyTag = 'span',
     ): string {
         $titleTag = (string) (is_callable($titleTag) ? $titleTag($menu) : $titleTag);
+        $itemEmptyTag = (string) (is_callable($itemEmptyTag) ? $itemEmptyTag($menu) : $itemEmptyTag);
 
         return view($this->view(), [
             'menu' => $menu,
             'items' => $items,
-            'title'=> $titleTag,
+            'titleTag' => $titleTag,
+            'itemEmptyTag' => $itemEmptyTag,
         ])->render();
     }
 

@@ -16,6 +16,7 @@ class Menu extends Component
         string $menuSlug,
         ?string $locale = null,
         protected Closure|string|null $titleTag = 'span',
+        protected Closure|string|null $itemEmptyTag = 'span',
     ) {
         $this->menu = MenuModel::query()
             ->where('slug', $menuSlug)
@@ -43,6 +44,7 @@ class Menu extends Component
             $this->menu,
             $items,
             $this->titleTag,
+            $this->itemEmptyTag,
         );
     }
 }

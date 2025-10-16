@@ -19,7 +19,7 @@ interface MenuTemplate
 
     public function isActiveItem(MenuItem $item): bool;
 
-    public function containtActiveItem(MenuItem $item): bool;
+    public function containsActiveItem(MenuItem $item): bool;
 
     /** @return array<\Filament\Schemas\Components\Component> */
     public function fields(): array;
@@ -34,6 +34,7 @@ interface MenuTemplate
         Menu $menu,
         Collection $items,
         Closure|string|null $titleTag = 'span',
+        Closure|string|null $itemEmptyTag = 'span',
     ): string;
 
     public function renderItem(

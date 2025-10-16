@@ -6,15 +6,18 @@
     /** @var Menu $menu */
     /** @var MenuItem $item */
 @endphp
-<li @class($containerItemClasses)>
+<li @class([
+    'lfm-item-li',
+    $item->children->isNotEmpty() ? 'lfm--has-children' : '',
+])>
     @if ($item->link_type === LinkType::html)
         {!! $item->html !!}
     @elseif ($item->link_type !== LinkType::empty)
         <a href="{{ $item->href() }}"
             {{ $menu->template->isActiveItem($item) ? 'data-active="true"' : ''}}
             @class([
-                ...$itemClasses,
-                $menu->template->isActiveItem($item) ? $itemActiveClasses : '',
+                'lfm-item',
+                'lfm--active' => $menu->template->isActiveItem($item),
                 $item->html_classes
             ])
             {{ $item->target_blank ? 'target="_blank"' : '' }}
@@ -22,24 +25,18 @@
             {{ $item->title }}
         </a>
     @else
-        <span @class([
-            ...$itemClasses,
-            $item->html_classes
-        ])>
+        <{{$itemEmptyTag}} @class(['lfm-item', $item->html_classes])>
             {{ $item->title }}
-        </span>
+        </{{$itemEmptyTag}}>
     @endif
 
     @if ($item->children->isNotEmpty())
-        <ul
-            {{ $menu->template->containtActiveItem($item) ? 'data-open="true"' : ''}}
-            @class([
-                ...$containerItemsClasses,
-                $menu->template->containtActiveItem($item) ? $itemContainsActiveClasses : '',
-            ])
-        >
+        <ul @class([
+            'lfm-items-container',
+            $menu->template->containsActiveItem($item) ? 'lfm--has-active-item' : '',
+        ]) data-depth="{{ $item->depth + 1 }}"
             @foreach($item->children as $item)
-                {!! $menu->template->renderItem($menu, $item) !!}
+                {!! $menu->template->renderItem($menu, $item, $itemEmptyTag) !!}
             @endforeach
         </ul>
     @endif
