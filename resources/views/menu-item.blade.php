@@ -25,7 +25,7 @@
             {{ $item->title }}
         </a>
     @else
-        <{{$itemEmptyTag}} @class(['lfm-item', $item->html_classes])>
+        <{{$itemEmptyTag}} @class(['lfm-item lfm--is-empty', $item->html_classes])>
             {{ $item->title }}
         </{{$itemEmptyTag}}>
     @endif
@@ -34,7 +34,7 @@
         <ul @class([
             'lfm-items-container',
             $menu->template->containsActiveItem($item) ? 'lfm--has-active-item' : '',
-        ]) data-depth="{{ $item->depth + 1 }}"
+        ]) data-depth="{{ $item->depth + 1 }}">
             @foreach($item->children as $item)
                 {!! $menu->template->renderItem($menu, $item, $itemEmptyTag) !!}
             @endforeach
