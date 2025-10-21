@@ -59,6 +59,15 @@ class Menu extends Model
         'updated_at' => 'datetime',
     ];
 
+    protected static function booted(): void
+    {
+        static::saving(static function (Menu $menu) {
+            if (empty($menu->locale) && MenuManager::locales()->count() === 1) {
+                $menu->locale = MenuManager::locales()->first()->code;
+            }
+        });
+    }
+
     public function items(): HasMany
     {
         return $this->hasMany(MenuManager::getMenuItemModel(), 'menu_id');
